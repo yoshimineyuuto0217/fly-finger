@@ -7,9 +7,11 @@ export default {
         './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
-        './resources/js/**/*.jsx',
+        './resources/js/**/*.tsx',
     ],
-
+    safelist: [
+  'text-[30px]',"text-[20px]" // ← ここで追加
+],
     theme: {
         extend: {
             fontFamily: {
