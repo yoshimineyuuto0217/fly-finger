@@ -1,17 +1,18 @@
 import LeftSideBar from "./components/LeftSideBar";
 import RightSideBar from "./components/RightSideBar";
+import { ModalProvider } from "./context/modalContext";
 
 
 const App = ({ children }: { children: React.ReactNode }) => {
     return (
         <>
-            <div className="flex justify-between">
+        <ModalProvider>
+                <div className="flex justify-between">
                     <LeftSideBar />
-                    <div>
-                    {children}
-                    </div>
-                    <RightSideBar/>
-            </div>
+                    <div className="w-[60%] overflow-y-scroll mx-auto">{children}</div>
+                    <RightSideBar />
+                </div>
+                </ModalProvider>
         </>
     );
 };

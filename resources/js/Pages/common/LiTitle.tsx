@@ -5,14 +5,26 @@ type LiProps = {
     title: string;
     src: string;
     href?: string;
-    size?: "large" | "small"
+    size?: "large" | "small";
+    onClick?:()=>void;
 };
-const LiTitle = ({ title, src, href,size="large" }: LiProps) => {
-    const textSize =  size === "large" ? INLINE_SIZE.text_size.large : INLINE_SIZE.text_size.small
+const LiTitle = ({ title, src, href, size = "large",onClick}: LiProps) => {
+    const textSize =
+        size === "large"
+            ? INLINE_SIZE.text_size.large
+            : INLINE_SIZE.text_size.small;
     return (
-        <li className={`${textSize} flex py-2 bg-black hover:bg-gray-900 rounded-xl`}>
+        <li
+            className={`${textSize} flex py-2 rounded-xl hover:cursor-pointer changCaller`}
+        >
             <img src={src} className="mr-2" />
-            {href ? <Link href={href} className="w-full">{title}</Link> : <p>{title}</p>}
+            {href ? (
+                <Link href={href} className="w-full ">
+                    {title}
+                </Link>
+            ) : (
+                <p onClick={onClick} >{title}</p>
+            )}
         </li>
     );
 };

@@ -1,14 +1,24 @@
-import React from "react";
+import { useModal } from "Pages/context/modalContext";
 import LiTitle from "./LiTitle";
+import { PostTextBox } from "./PostTextBox";
+import { modeChangeFunction } from "Pages/hooks/Modal";
+
 
 type OtherProps = {
-    className:string;
-}
+    className: string;
+    otherRef: React.RefObject<HTMLDivElement | null>;
+};
 
-const OtherModal = ({className}:OtherProps) => {
+const OtherModal = ({ className, otherRef }: OtherProps) => {
+    const { problem, changeProblemModal, closeProblemModal } =
+        modeChangeFunction();
+        const {modeChange} = useModal();
     return (
         <>
-            <div className={`w-[250px] h-[220px] border bg-black  z-1 rounded-xl flex flex-col justify-between p-4 ${className}`}>
+            <div
+                ref={otherRef}
+                className={`w-[250px] h-[220px] border bg-white z-1 rounded-xl flex flex-col justify-between p-4 changCallers ${className}`}
+            >
                 <LiTitle
                     title="Fly Finger"
                     href="flyfinger"
@@ -16,19 +26,17 @@ const OtherModal = ({className}:OtherProps) => {
                     size="small"
                 />
                 <LiTitle
-                    title="問題の方向"
-                    href=""
+                    title="問題の報告"
+                    onClick={changeProblemModal}
                     src="/assets/problem.svg"
                     size="small"
                 />
-                <div onClick={()=>alert("失敗")} className="cursor-pointer">
                 <LiTitle
                     title="モード切り替え"
-                    href=""
                     src="/assets/mode.svg"
+                    onClick={modeChange}
                     size="small"
                 />
-                </div>
                 <LiTitle
                     title="ログアウト"
                     href="login"
@@ -36,6 +44,13 @@ const OtherModal = ({className}:OtherProps) => {
                     size="small"
                 />
             </div>
+            {problem && (
+                <PostTextBox
+                    changeModal={closeProblemModal}
+                    className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 "
+                    problemClass={true}
+                />
+            )}
         </>
     );
 };

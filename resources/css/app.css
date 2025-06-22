@@ -2,7 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-/* resources/css/app.css に追記 */
-body {
-  @apply text-white bg-black; /* 背景が黒で文字が白 */
+/* ダークモード */
+body.dark {
+  @apply bg-black text-white border-white;
 }
+
+/* ライトモード */
+body.light {
+  @apply bg-white text-black border-black;
+}
+

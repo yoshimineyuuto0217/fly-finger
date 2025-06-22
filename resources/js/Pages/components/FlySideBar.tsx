@@ -1,8 +1,11 @@
 import OtherModal from "Pages/common/OtherModal";
-import { useState } from "react";
+import { useModal } from "Pages/context/modalContext";
+import { modeChangeFunction } from "Pages/hooks/Modal";
+import { useEffect } from "react";
 
 const FlySideBar = () => {
-    const [otherModal, setOtherModal] = useState(false);
+    const { OtherRef, setOtherModal, otherModal } = modeChangeFunction();
+
     return (
         <>
             <div className="w-[5%] border-r h-screen flex flex-col justify-between px-5 py-8">
@@ -23,7 +26,10 @@ const FlySideBar = () => {
                     onClick={() => setOtherModal((prev) => !prev)}
                 />
                 {otherModal && (
-                    <OtherModal className="absolute left-[3%] bottom-[8%]" />
+                    <OtherModal
+                        className="absolute left-[3%] bottom-[8%]"
+                        otherRef={OtherRef}
+                    />
                 )}
             </div>
         </>

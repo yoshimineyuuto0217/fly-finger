@@ -1,21 +1,29 @@
 import OtherModal from "Pages/common/OtherModal";
 import { INLINE_SIZE } from "Pages/constants/inlinesize";
-import { useState } from "react";
-
+import { useModal } from "Pages/context/modalContext";
+import { modeChangeFunction } from "Pages/hooks/Modal";
+import { useEffect, useRef } from "react";
 
 const OtherButton = () => {
-    const [otherModal, setOtherModal] = useState(false);
+
     const textSize = INLINE_SIZE.text_size.large;
+    const {otherModal,changeOtherModal,OtherRef} = modeChangeFunction();
+
     return (
         <>
             <div
-                className="flex ml-[8%] mb-[15%] relative cursor-pointer"
-                onClick={() => setOtherModal(prev => !prev)}
+                className="flex mx-5 rounded-xl py-2 mb-[15%] cursor-pointer changCaller"
+                onClick={changeOtherModal}
             >
-                <img src="/assets/others.svg"/>
-                <div className={textSize}>Others</div>
+                <img src="/assets/others.svg" />
+                <div className={`${textSize} `}>Others</div>
             </div>
-            {otherModal && <OtherModal className="absolute left-[4%] bottom-[12%]" />}
+            {otherModal && (
+                <OtherModal
+                    className="absolute left-[20%] bottom-[12%]"
+                    otherRef={OtherRef}
+                />
+            )}
         </>
     );
 };
