@@ -1,8 +1,10 @@
+// resources/js/app.tsx
+import { ModalProvider } from 'Pages/context/modalContext';
 import '../css/app.css';
 import './bootstrap';
 
 import { createInertiaApp } from '@inertiajs/react';
-import { createRoot, hydrateRoot } from 'react-dom/client';
+import { createRoot } from 'react-dom/client';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
@@ -13,12 +15,18 @@ createInertiaApp({
       ...import.meta.glob('./Pages/**/*.tsx'),
       ...import.meta.glob('./Pages/**/*.jsx'),
     };
-    return await pages[`./Pages/${name}.tsx`]?.() || pages[`./Pages/${name}.jsx`]?.();
+    return (
+      (pages[`./Pages/${name}.tsx`]?.() as Promise<any>) ||
+      pages[`./Pages/${name}.jsx`]?.()
+    );
   },
   setup({ el, App, props }) {
-    // React 18 推奨の hydrateRoot を使う（SSR or 初期マウント時）
     const root = createRoot(el);
-    root.render(<App {...props} />);
+    root.render(
+      <ModalProvider>                {/* ← ここでラップ */}
+        <App {...props} />
+      </ModalProvider>
+    );
   },
   progress: {
     color: '#4B5563',

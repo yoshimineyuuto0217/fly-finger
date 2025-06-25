@@ -6,9 +6,9 @@ type LiProps = {
     src: string;
     href?: string;
     size?: "large" | "small";
-    onClick?:()=>void;
+    onClick?: () => void;
 };
-const LiTitle = ({ title, src, href, size = "large",onClick}: LiProps) => {
+const LiTitle = ({ title, src, href, size = "large", onClick }: LiProps) => {
     const textSize =
         size === "large"
             ? INLINE_SIZE.text_size.large
@@ -19,11 +19,15 @@ const LiTitle = ({ title, src, href, size = "large",onClick}: LiProps) => {
         >
             <img src={src} className="mr-2" />
             {href ? (
-                <Link href={href} className="w-full ">
+                <Link
+                    href={href}
+                    className="w-full"
+                    {...(onClick ? { onClick } : {})}//onclickもあれば展開
+                >
                     {title}
                 </Link>
             ) : (
-                <p onClick={onClick} >{title}</p>
+                <p onClick={onClick}>{title}</p>
             )}
         </li>
     );

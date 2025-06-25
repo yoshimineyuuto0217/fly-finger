@@ -2,14 +2,32 @@ import {
     createContext,
     useContext,
     ReactNode,
+    useState,
+    Dispatch,
+    SetStateAction,
 } from "react";
 
 type ModalProps = {
     modeChange: () => void;
+    followListModal: boolean;
+    setFollowListModal: Dispatch<SetStateAction<boolean>>;
+    followers: boolean;
+    setFollowers: Dispatch<SetStateAction<boolean>>;
+    homeCardList: boolean;
+    setHomeCardList: Dispatch<SetStateAction<boolean>>;
+    savedCardList: boolean;
+    setSavedCardList: Dispatch<SetStateAction<boolean>>;
+    rightBar: boolean;
+    setRightBar: Dispatch<SetStateAction<boolean>>;
 };
 const ModalContext = createContext<ModalProps | undefined>(undefined);
 
 export const ModalProvider = ({ children }: { children: ReactNode }) => {
+    const [rightBar, setRightBar] = useState(true);
+    const [homeCardList, setHomeCardList] = useState(true);
+    const [savedCardList, setSavedCardList] = useState(false);
+    const [followListModal, setFollowListModal] = useState(false);
+    const [followers, setFollowers] = useState(false);
     // モードの切り替え処理
     const modeChange = () => {
         const body = document.body;
@@ -44,7 +62,17 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
     return (
         <ModalContext.Provider
             value={{
+                rightBar,
+                setRightBar,
                 modeChange,
+                followers,
+                setFollowers,
+                followListModal,
+                setFollowListModal,
+                homeCardList,
+                setHomeCardList,
+                savedCardList,
+                setSavedCardList,
             }}
         >
             {children}

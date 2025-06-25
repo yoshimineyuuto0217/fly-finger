@@ -1,33 +1,13 @@
-import  { useEffect, useState } from "react";
+import { UserProp } from "Pages/types/mockData";
 import BoxTitle from "./BoxTitle";
 import GoodListBox from "./GoodListBox";
-import {
-    mockData,
-    UserProp,
-} from "Pages/types/mockData";
 
-const RankingBoxCard = () => {
-    const [newCard, setNewCard] = useState<UserProp>();
-
-    useEffect(() => {
-        try {
-            if (mockData.tasks.length > 0) {
-                const first = mockData.tasks[0];
-                setNewCard({
-                    mainText: first.mainText,
-                    mainTitle: first.mainTitle,
-                    name:first.name
-                });
-            }
-        } catch (error) {
-            console.error(`エラー出てます:${error}`);
-        }
-    }, []);
+const RankingBoxCard = ({newCard}:{newCard: UserProp | undefined;}) => {
 
     return (
 
         <>
-            <div className="border w-[90%] mx-auto h-auto p-2">
+            <div className="border w-[90%] mx-auto h-auto p-2 my-[5%]">
                 <BoxTitle
                     size={30}
                     profileSrc="/assets/grey.png"
