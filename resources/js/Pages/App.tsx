@@ -11,7 +11,7 @@ const App = ({ children }: { children: React.ReactNode }) => {
                 <div
                     className={
                         rightBar
-                            ? "w-[60%] overflow-y-scroll mx-auto"
+                            ? "w-[60%] mx-auto"
                             : "w-[80%] absolute  right-0"
                     }
                 >

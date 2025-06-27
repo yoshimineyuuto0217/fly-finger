@@ -24,6 +24,7 @@ const Home = () => {
                     <SelectBox />
                     <HederTitle title="Home" src="/assets/blackhome.svg"/>
                     <div className="w-full">
+                        <a href="user">
                         {cards?.tasks.map((task) => (
                             <HomeCard
                                 key={task.id}
@@ -33,6 +34,7 @@ const Home = () => {
                                 mainText={task.mainText}
                             />
                         ))}
+                        </a>
                     </div>
                 </div>
             </>

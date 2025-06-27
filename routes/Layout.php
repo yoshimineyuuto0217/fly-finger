@@ -31,3 +31,8 @@ Route::get('/login',function(){
     return Inertia::render('Layout/Login');
 })->name('login');
 
+Route::get('/user',function(){
+    return Inertia::render('Layout/User');
+})->name('user');
+
+

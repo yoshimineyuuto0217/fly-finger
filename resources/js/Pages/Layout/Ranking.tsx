@@ -21,8 +21,9 @@ const Ranking = () => {
     return (
         <>
             <App>
+
                 <HederTitle title="Ranking" src="/assets/medalblack.svg" />
-                <div className="mt-[8%] flex justify-between  ">
+                <div className="mt-[8%] flex justify-between ">
                     <div className="w-full">
                         <p className="text-2xl text-center mb-5 ">Week King</p>
                         <div >
@@ -61,6 +62,7 @@ const Ranking = () => {
                     </div>
                 </div>
                 </App>
+
         </>
     );
 };

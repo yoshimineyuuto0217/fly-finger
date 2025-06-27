@@ -17,7 +17,7 @@ const OtherModal = ({ className, otherRef }: OtherProps) => {
         <>
             <div
                 ref={otherRef}
-                className={`w-[250px] h-[220px] border bg-white z-1 rounded-xl flex flex-col justify-between p-4 changCallers ${className}`}
+                className={`w-[250px] h-[220px] border bg-white z-10 rounded-xl flex flex-col justify-between p-4 changCallers ${className}`}
             >
                 <LiTitle
                     title="Fly Finger"

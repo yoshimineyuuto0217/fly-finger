@@ -1,6 +1,5 @@
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import FollowCancelBox from "./FollowCancelBox";
-import FollowList from "./FollowList";
 import FollowBox from "Pages/components/FollowBox";
 import FollowersBox from "Pages/components/FollowersBox";
 import { useModal } from "Pages/context/modalContext";
@@ -15,6 +14,10 @@ const FollowModal = ({
     const followModalRef = useRef<HTMLDivElement | null>(null);
     const [cancelModal, setCancelModal] = useState(false);
     const CancelModal = () => setCancelModal(false);
+    const unFollow = () => {
+        alert("フォロー解除しました");
+        setCancelModal(false);
+    };
     const { setFollowListModal, setFollowers, followListModal, followers } =
         useModal();
     useEffect(() => {
@@ -39,7 +42,9 @@ const FollowModal = ({
             {cancelModal && (
                 <div className="bg-black w-full h-screen opacity-[50%] z-10 top-0 left-0 fixed"></div>
             )}
-            {cancelModal && <FollowCancelBox onClick={CancelModal} />}
+            {cancelModal && (
+                <FollowCancelBox onClick={CancelModal} onConfirm={unFollow} />
+            )}
             <div
                 ref={followModalRef}
                 className="border w-[700px]  rounded-xl h-[550px] fixed top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 bg-white overflow-y-scroll"
@@ -47,8 +52,7 @@ const FollowModal = ({
                 <div className="flex w-full border-b ">
                     <div
                         onClick={() => {
-                            setFollowListModal(true),
-                            setFollowers(false);
+                            (setFollowListModal(true), setFollowers(false));
                         }}
                         className="w-[50%] text-center border-r hover:cursor-pointer hover:bg-gray-200"
                     >
@@ -57,8 +61,7 @@ const FollowModal = ({
                     </div>
                     <div
                         onClick={() => {
-                            setFollowers(true),
-                            setFollowListModal(false);
+                            (setFollowers(true), setFollowListModal(false));
                         }}
                         className="w-[50%] text-center hover:cursor-pointer hover:bg-gray-200"
                     >

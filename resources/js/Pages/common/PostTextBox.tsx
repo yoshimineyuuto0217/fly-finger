@@ -19,7 +19,7 @@ export const PostTextBox = ({
     return (
         <>
             {problemClass && (
-                <div className="w-full h-screen bg-black fixed z-1 opacity-[60%]"></div>
+                <div className="w-full h-screen bg-black fixed z-10 opacity-[60%]"></div>
             )}
             {problemClass ? (
                 <form onSubmit={submitProblem}>

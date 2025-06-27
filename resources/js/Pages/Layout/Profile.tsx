@@ -8,9 +8,15 @@ import { useModal } from "Pages/context/modalContext";
 import { useState } from "react";
 
 const Profile = () => {
-    const [profileText, setProfileText] = useState<string>("");
-    const [profileName, setProfileName] = useState<string>("吉嶺勇斗");
-    const { homeCardList, savedCardList } = useModal();
+    const [myProfileText, setMyProfileText] = useState<string>("");
+    const [myProfileName, setMyProfileName] = useState<string>("吉嶺勇斗");
+    const { homeCardList, savedCardList,setSavedCardList,
+        setHomeCardList,} = useModal();
+
+        const post =()=>{
+            setHomeCardList(true);
+                        setSavedCardList(false);
+        }
     return (
         <>
                 <App>
@@ -28,21 +34,21 @@ const Profile = () => {
                                 <div className="py-2 w-[75%]  ml-auto flex flex-col justify-between">
                                     <input
                                         className="text-1xl border-none h-[30px] w-full"
-                                        value={profileName}
+                                        value={myProfileName}
                                         onChange={(e) =>
-                                            setProfileName(e.target.value)
+                                            setMyProfileName(e.target.value)
                                         }
                                     />
                                     <div className="border h-[60px]">
                                         <textarea
                                             className="w-full h-full resize-none"
-                                            value={profileText}
+                                            value={myProfileText}
                                             onChange={(e) =>
-                                                setProfileText(e.target.value)
+                                                setMyProfileText(e.target.value)
                                             }
                                         />
                                     </div>
-                                    <UserActivity />
+                                    <UserActivity onClick={post}/>
                                 </div>
                             </div>
                             {homeCardList && <PostCardList/>}
