@@ -1,3 +1,4 @@
+import { useModal } from "Pages/context/modalContext";
 import { useState } from "react";
 
 export const PostTextBox = ({
@@ -10,7 +11,7 @@ export const PostTextBox = ({
     problemClass?: boolean;
 }) => {
     const [text, setText] = useState("");
-
+    const {darkMode} = useModal();
     const submitProblem = (e: React.FormEvent) => {
         e.preventDefault();
         alert("送信");
@@ -19,7 +20,7 @@ export const PostTextBox = ({
     return (
         <>
             {problemClass && (
-                <div className="w-full h-screen bg-black fixed z-10 opacity-[60%]"></div>
+                <div className="w-full h-screen bg-black fixed z-[9998] opacity-[60%] left-0 top-0"></div>
             )}
             {problemClass ? (
                 <form onSubmit={submitProblem}>
@@ -29,9 +30,9 @@ export const PostTextBox = ({
                         <div className="flex h-8 border-b items-center">
                             <p className="border-r px-2">本文</p>
                             <div className="flex space-x-2 px-2">
-                                <img src="/assets/image.svg" alt="画像追加" />
+                                <img src={`${darkMode?"/assets/image.svg":"/assets/imageblack.svg"}`} alt="画像追加" />
                                 <img
-                                    src="/assets/stamp.svg"
+                                    src={`${darkMode?"/assets/stamp.svg":"/assets/stampblack.svg"}`}
                                     alt="スタンプ追加機能"
                                 />
                             </div>
@@ -63,14 +64,14 @@ export const PostTextBox = ({
                 </form>
             ) : (
                 <div
-                    className={`w-full h-auto border rounded-xl  changCallers `}
+                    className={`w-full h-auto border rounded-xl `}
                 >
                     <div className="flex h-8 border-b items-center">
                         <p className="border-r px-2">本文</p>
                         <div className="flex space-x-2 px-2">
-                            <img src="/assets/image.svg" alt="画像追加" />
+                            <img src={`${darkMode?"/assets/image.svg":"/assets/imageblack.svg"}`} alt="画像追加" />
                             <img
-                                src="/assets/stamp.svg"
+                                src={`${darkMode?"/assets/stamp.svg":"/assets/stampblack.svg"}`}
                                 alt="スタンプ追加機能"
                             />
                         </div>

@@ -1,3 +1,4 @@
+import { usePage, useRemember } from "@inertiajs/react";
 import {
     createContext,
     useContext,
@@ -5,10 +6,10 @@ import {
     useState,
     Dispatch,
     SetStateAction,
+    useEffect,
 } from "react";
 
 type ModalProps = {
-    modeChange: () => void;
     followListModal: boolean;
     setFollowListModal: Dispatch<SetStateAction<boolean>>;
     followers: boolean;
@@ -19,52 +20,47 @@ type ModalProps = {
     setSavedCardList: Dispatch<SetStateAction<boolean>>;
     rightBar: boolean;
     setRightBar: Dispatch<SetStateAction<boolean>>;
+    postModal: boolean;
+    setPostModal: Dispatch<SetStateAction<boolean>>;
+    changeModal: () => void;
+    toggleDarkMode: () => void;
+    darkMode: boolean;
 };
+
 const ModalContext = createContext<ModalProps | undefined>(undefined);
 
 export const ModalProvider = ({ children }: { children: ReactNode }) => {
-    const [rightBar, setRightBar] = useState(true);
+    const [darkMode, setDarkMode] = useState(false);
+    const [postModal, setPostModal] = useState(false);
+    const [rightBar, setRightBar] = useRemember(true, "rightBar");
     const [homeCardList, setHomeCardList] = useState(true);
     const [savedCardList, setSavedCardList] = useState(false);
     const [followListModal, setFollowListModal] = useState(false);
     const [followers, setFollowers] = useState(false);
-    // モードの切り替え処理
-    const modeChange = () => {
-        const body = document.body;
-        const allCallers = document.querySelectorAll(".changCaller");
-        const bgChangeCallers = document.querySelectorAll(".changCallers");
 
-        if (body.classList.contains("dark")) {
-            body.classList.remove("dark");
-            body.classList.add("light");
-            bgChangeCallers.forEach((el) => {
-                el.classList.add("bg-white");
-                el.classList.remove("bg-black");
-            });
-            allCallers.forEach((el) => {
-                el.classList.remove("bg-black", "hover:bg-gray-900");
-                el.classList.add("bg-white", "hover:bg-gray-100");
-            });
-        } else {
-            body.classList.remove("light");
-            body.classList.add("dark");
-            bgChangeCallers.forEach((el) => {
-                el.classList.add("bg-black");
-                el.classList.remove("bg-white");
-            });
-            allCallers.forEach((el) => {
-                el.classList.remove("bg-white", "hover:bg-gray-100");
-                el.classList.add("bg-black", "hover:bg-gray-900");
-            });
-        }
+    const changeModal = () => {
+        setPostModal((prev) => !prev);
     };
+    // それ以外のダークモード切り替え
+    const toggleDarkMode = () => {
+        setDarkMode(!darkMode);
+    };
+
+    useEffect(() => {
+        if (darkMode) {
+            document.body.classList.add("dark");
+        } else {
+            document.body.classList.remove("dark");
+        }
+    }, [darkMode]);
 
     return (
         <ModalContext.Provider
             value={{
+                darkMode,
+                toggleDarkMode,
                 rightBar,
                 setRightBar,
-                modeChange,
                 followers,
                 setFollowers,
                 followListModal,
@@ -73,6 +69,9 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
                 setHomeCardList,
                 savedCardList,
                 setSavedCardList,
+                postModal,
+                setPostModal,
+                changeModal,
             }}
         >
             {children}

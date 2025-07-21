@@ -11,7 +11,7 @@ const Profile = () => {
     const [myProfileText, setMyProfileText] = useState<string>("");
     const [myProfileName, setMyProfileName] = useState<string>("吉嶺勇斗");
     const { homeCardList, savedCardList,setSavedCardList,
-        setHomeCardList,} = useModal();
+        setHomeCardList,darkMode} = useModal();
 
         const post =()=>{
             setHomeCardList(true);
@@ -23,7 +23,7 @@ const Profile = () => {
                     <div className="w-[90%] mx-auto">
                         <HederTitle
                             title="Profile"
-                            src="/assets/humanblack.svg"
+                            src={`${darkMode?"/assets/human.svg":"/assets/userblack.svg"}`}
                         />
                         <div className="w-full  mt-[11%]">
                             <div className="flex w-full">
@@ -33,7 +33,7 @@ const Profile = () => {
                                 />
                                 <div className="py-2 w-[75%]  ml-auto flex flex-col justify-between">
                                     <input
-                                        className="text-1xl border-none h-[30px] w-full"
+                                        className="text-1xl border-none h-[30px] w-full bg-transparent"
                                         value={myProfileName}
                                         onChange={(e) =>
                                             setMyProfileName(e.target.value)
@@ -41,8 +41,9 @@ const Profile = () => {
                                     />
                                     <div className="border h-[60px]">
                                         <textarea
-                                            className="w-full h-full resize-none"
+                                            className="w-full h-full resize-none bg-transparent"
                                             value={myProfileText}
+                                            placeholder="100字以内で入力してください"
                                             onChange={(e) =>
                                                 setMyProfileText(e.target.value)
                                             }

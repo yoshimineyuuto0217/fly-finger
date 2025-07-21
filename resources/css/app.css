@@ -2,13 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ダークモード */
+@layer base {
+  .Mode.dark {
+    background-color: #3a383b;
+    color: #e1e1e1;
+    transition: all 0.5s;
+  }
+
+  .Mode.light {
+    background-color: #ffff;
+    color: #353535;
+    transition: all 0.5s;
+  }
+}
+
+/* styles.css */
 body.dark {
-  @apply bg-black text-white border-white;
+  background-color:#3a383b;
+  color: #eee;
 }
-
-/* ライトモード */
-body.light {
-  @apply bg-white text-black border-black;
-}
-

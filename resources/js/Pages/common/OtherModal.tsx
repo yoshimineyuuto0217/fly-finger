@@ -2,7 +2,7 @@ import { useModal } from "Pages/context/modalContext";
 import LiTitle from "./LiTitle";
 import { PostTextBox } from "./PostTextBox";
 import { modeChangeFunction } from "Pages/hooks/Modal";
-
+import { usePage } from "@inertiajs/react";
 
 type OtherProps = {
     className: string;
@@ -12,42 +12,48 @@ type OtherProps = {
 const OtherModal = ({ className, otherRef }: OtherProps) => {
     const { problem, changeProblemModal, closeProblemModal } =
         modeChangeFunction();
-        const {modeChange} = useModal();
+    const { darkMode, toggleDarkMode} = useModal();
+    const { url } = usePage();
+    const pathName = url === "/fly";
     return (
         <>
             <div
                 ref={otherRef}
-                className={`w-[250px] h-[220px] border bg-white z-10 rounded-xl flex flex-col justify-between p-4 changCallers ${className}`}
+                className={`Mode ${
+                    darkMode ? "dark" : "light"
+                } w-[250px] h-[220px] border bg-white z-10 rounded-xl p-3 flex flex-col justify-between   ${className}`}
             >
                 <LiTitle
-                    title="Fly Finger"
-                    href="flyfinger"
-                    src="/assets/problem.svg"
+                    title={pathName ? "Fly Finger" : "作者投稿"}
+                    href={pathName ? "/home" : "/fly"}
+                    src={`${darkMode?"/assets/F.svg":"/assets/Fblack.svg"}`}
                     size="small"
                 />
                 <LiTitle
                     title="問題の報告"
                     onClick={changeProblemModal}
-                    src="/assets/problem.svg"
+                    src={`${darkMode?"/assets/problem.svg":"/assets/problemblack.svg"}`}
                     size="small"
                 />
                 <LiTitle
                     title="モード切り替え"
-                    src="/assets/mode.svg"
-                    onClick={modeChange}
+                    src={`${darkMode?"/assets/mode.svg":"/assets/modeblack.svg"}`}
+                    onClick={toggleDarkMode}
                     size="small"
                 />
                 <LiTitle
                     title="ログアウト"
                     href="login"
-                    src="/assets/logout.svg"
+                    src={`${darkMode?"/assets/logout.svg":"/assets/logoutblack.svg"}`}
                     size="small"
                 />
             </div>
             {problem && (
                 <PostTextBox
                     changeModal={closeProblemModal}
-                    className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 "
+                    className={`fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[9999] Mode ${
+                        darkMode ? "dark" : "light"
+                    }`}
                     problemClass={true}
                 />
             )}

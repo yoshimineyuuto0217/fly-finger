@@ -1,28 +1,29 @@
 import OtherModal from "Pages/common/OtherModal";
+import PostModal from "Pages/common/PostModal";
 import { useModal } from "Pages/context/modalContext";
 import { modeChangeFunction } from "Pages/hooks/Modal";
-import { useEffect } from "react";
 
 const FlySideBar = () => {
     const { OtherRef, setOtherModal, otherModal } = modeChangeFunction();
-
+    const { setPostModal, postModal, changeModal,darkMode} = useModal();
     return (
         <>
-            <div className="w-[5%] border-r h-screen flex flex-col justify-between px-5 py-8">
+            <div className="w-[5%] border-r h-screen flex flex-col justify-between px-5 py-8 fixed top-0 left-0">
+                    <img
+                        src={`${darkMode?"/assets/home.svg":"/assets/homeblack.svg"}`}
+                        alt="home"
+                        className="mx-auto "
+                    />
                 <img
-                    src="assets/home.svg"
-                    alt="home"
-                    className="mx-auto hover:bg-gray-800"
-                />
-                <img
-                    src="assets/place.svg"
+                    src={`${darkMode?"/assets/place.svg":"/assets/placeblack.svg"}`}
                     alt="post"
-                    className="mx-auto hover:bg-gray-800"
+                    className="mx-auto cursor-pointer"
+                    onClick={() => setPostModal((prev) => !prev)}
                 />
                 <img
-                    src="assets/others.svg"
+                    src={`${darkMode?"/assets/others.svg":"/assets/othersblack.svg"}`}
                     alt="その他"
-                    className="relative mx-auto hover:bg-gray-800"
+                    className="relative mx-auto cursor-pointer"
                     onClick={() => setOtherModal((prev) => !prev)}
                 />
                 {otherModal && (
@@ -31,6 +32,7 @@ const FlySideBar = () => {
                         otherRef={OtherRef}
                     />
                 )}
+                {postModal && <PostModal changeModal={changeModal} />}
             </div>
         </>
     );
