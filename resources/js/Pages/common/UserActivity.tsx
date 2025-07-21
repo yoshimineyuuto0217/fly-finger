@@ -14,9 +14,9 @@ export const UserActivity = ({onClick}:{onClick:()=>void;}) => {
 
     return (
         <>
-            <div className="flex w-full justify-between px-2 relative">
+            <div className="flex w-full justify-between px-2  ">
                 <div
-                    className="text-center hover:cursor-pointer"
+                    className="text-center hover:cursor-pointer "
                     onClick={onClick}>
                     投稿<p>1</p>
                 </div>

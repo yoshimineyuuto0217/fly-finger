@@ -18,8 +18,13 @@ const FollowModal = ({
         alert("フォロー解除しました");
         setCancelModal(false);
     };
-    const { setFollowListModal, setFollowers, followListModal, followers } =
-        useModal();
+    const {
+        setFollowListModal,
+        setFollowers,
+        followListModal,
+        followers,
+        darkMode,
+    } = useModal();
     useEffect(() => {
         const handleClickOutSide = (event: MouseEvent) => {
             if (cancelModal) return;
@@ -47,23 +52,25 @@ const FollowModal = ({
             )}
             <div
                 ref={followModalRef}
-                className="border w-[700px]  rounded-xl h-[550px] fixed top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 bg-white overflow-y-scroll"
+                className={`border w-[700px]  rounded-xl h-[550px] fixed top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 bg-white overflow-y-scroll Mode ${
+                    darkMode ? "dark" : "light"
+                }`}
             >
                 <div className="flex w-full border-b ">
                     <div
                         onClick={() => {
-                            (setFollowListModal(true), setFollowers(false));
+                            setFollowListModal(true), setFollowers(false);
                         }}
-                        className="w-[50%] text-center border-r hover:cursor-pointer hover:bg-gray-200"
+                        className={`w-[50%] text-center border-r hover:cursor-pointer ${darkMode?"hover:bg-gray-600":"hover:bg-white"}`}
                     >
                         <p>Follow</p>
                         <p>200</p>
                     </div>
                     <div
                         onClick={() => {
-                            (setFollowers(true), setFollowListModal(false));
+                            setFollowers(true), setFollowListModal(false);
                         }}
-                        className="w-[50%] text-center hover:cursor-pointer hover:bg-gray-200"
+                        className={`w-[50%] text-center hover:cursor-pointer ${darkMode?"hover:bg-gray-600":"hover:bg-white"}`}
                     >
                         <p>Followers</p>
                         <p>300</p>
@@ -71,7 +78,10 @@ const FollowModal = ({
                 </div>
                 <div className="relative flex w-[70%] mx-auto my-5  h-[25px] ">
                     <img src="/assets/searchblack.svg" alt="検索ボタン" />
-                    <input type="text" className="w-full rounded-md " />
+                    <input
+                        type="text"
+                        className="w-full rounded-md bg-transparent"
+                    />
                 </div>
                 {followListModal && (
                     <FollowBox onClick={() => setCancelModal(true)} />

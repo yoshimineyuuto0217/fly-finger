@@ -8,12 +8,12 @@ import UserIconBox from "Pages/common/UserIconBox";
 import { useModal } from "Pages/context/modalContext";
 import { useEffect, useState } from "react";
 
-const User = () => {
+const User = ({mainText,mainTitle}:{mainText:string;mainTitle:string;}) => {
     const [userName, setUserName] = useState("");
     const [postList,setPostList] = useState(false);
     const [image,setImage] = useState();
     const [userProfileText, setUserProfileText] = useState();
-    const { homeCardList,setHomeCardList } = useModal();
+    const { homeCardList,setHomeCardList,darkMode } = useModal();
     const post = () => {
         setPostList(true);
         setHomeCardList(false);
@@ -32,7 +32,7 @@ const User = () => {
     }, []);
     return (
         <App>
-            <div className="w-[90%] mx-auto">
+            <div className={`w-[90%] mx-auto h-screen`}>
                 <HederTitle title="Home" src="/assets/humanblack.svg" />
                 <div className="w-full  mt-[11%]">
                     <div className="flex w-full">
@@ -41,21 +41,21 @@ const User = () => {
                             <input
                                 readOnly
                                 disabled
-                                className="text-1xl border-none h-[30px] w-full"
+                                className="text-1xl border-none h-[30px] w-full bg-transparent"
                                 value={userName}
                             />
                             <div className="border h-[60px]">
                                 <textarea
                                     readOnly
                                     disabled
-                                    className="w-full h-full resize-none"
+                                    className="w-full h-full resize-none bg-transparent"
                                     value={userProfileText}
                                 />
                             </div>
                             <UserActivity onClick={post}/>
                         </div>
                     </div>
-                    {homeCardList && <DescriptionCard />}
+                    {homeCardList && <DescriptionCard mainText={mainText} mainTitle={mainTitle}/>}
                     {postList && <PostCardList/>}
                 </div>
             </div>

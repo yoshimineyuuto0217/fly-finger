@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { PostTextBox } from "./PostTextBox";
 import { createPortal } from "react-dom";
+import { useModal } from "Pages/context/modalContext";
 
 
 const PostModal = ({ changeModal }: {changeModal:()=>void;}) => {
     const [title, setTitle] = useState("");
     const [tag, setTag] = useState("");
+    const {darkMode} = useModal();
 
     const submitPost = (e: React.FormEvent) => {
         e.preventDefault();
@@ -15,7 +17,7 @@ const PostModal = ({ changeModal }: {changeModal:()=>void;}) => {
     return createPortal(
         <>
             <div className="fixed bg-black opacity-[70%] w-full h-screen z-[9998] top-0 left-0"></div>
-            <div className="w-[850px] h-[565px] bg-black border fixed  left-1/2 rounded-xl top-1/2 -translate-x-1/2 -translate-y-1/2 z-[9999]">
+            <div className={`w-[850px] h-[565px]  border fixed  left-1/2 rounded-xl top-1/2 -translate-x-1/2 -translate-y-1/2 z-[9999] Mode ${darkMode ? "dark" : "light"}` }>
                 <div className="w-[750px] h-[30px]  rounded-xl mx-auto  ">
                     <form onSubmit={submitPost}>
                         <input
