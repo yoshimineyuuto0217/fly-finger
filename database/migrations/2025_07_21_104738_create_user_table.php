@@ -27,7 +27,7 @@ return new class extends Migration
             $table->unsignedBigInteger('update_by');
             $table->rememberToken();
             // ログインする時に使うフラグ
-            $table->boolean('is_active')->default(1)->after('remember_token');
+            $table->boolean('is_active')->default(1);
         });
     }
 

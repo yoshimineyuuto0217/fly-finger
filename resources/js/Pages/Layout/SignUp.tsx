@@ -16,9 +16,9 @@ const SignUp = () => {
         //         ?.getAttribute("content") ?? "";
         e.preventDefault();
         try {
-            await axios.get("/sanctum/csrf-cookie", { withCredentials: true });
+            await axios.get("http://localhost:8000/sanctum/csrf-cookie", { withCredentials: true });
             const res = await axios.post(
-                "/register",
+                "http://localhost:8000/register",
                 {
                     name: name,
                     email: email,
@@ -33,6 +33,8 @@ const SignUp = () => {
                     withCredentials: true,
                 }
             );
+
+            //  await axios.get("http://localhost:8000/sanctum/csrf-cookie", { withCredentials: true });
             Inertia.visit("/home");
         } catch (error:any) {
             if (error.response?.status === 422) {
