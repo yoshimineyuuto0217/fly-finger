@@ -27,3 +27,4 @@ Route::get('/dashboard', function () {
 // 新しいファィル作った時はweb.phpにrequireで呼び込む
 require __DIR__.'/auth.php';
 require __DIR__.'/Layout.php';
+require __DIR__.'/api.php';

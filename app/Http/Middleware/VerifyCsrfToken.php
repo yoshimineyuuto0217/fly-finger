@@ -14,7 +14,6 @@ class VerifyCsrfToken extends Middleware
     protected $except = [
         // 除外したいルートをここに追加
         // 'api/*',
-        'register',
         'sanctum/csrf-cookie',
     ];
 }

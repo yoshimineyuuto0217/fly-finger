@@ -26,6 +26,8 @@ return new class extends Migration
             // unsignedBigIntegerはintegerよりでかい数字入れれるだけ
             $table->unsignedBigInteger('update_by');
             $table->rememberToken();
+            // ログインする時に使うフラグ
+            $table->boolean('is_active')->default(1);
         });
     }
 

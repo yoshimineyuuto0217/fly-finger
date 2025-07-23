@@ -1,20 +1,25 @@
+import { trouble } from "Pages/api/Auth";
 import { useModal } from "Pages/context/modalContext";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 
 export const PostTextBox = ({
     changeModal,
     className,
     problemClass,
+    text,
+    setText
 }: {
     changeModal: () => void;
+    text:string;
+    setText: (val: string) => void;
     className?: string;
     problemClass?: boolean;
 }) => {
-    const [text, setText] = useState("");
     const {darkMode} = useModal();
-    const submitProblem = (e: React.FormEvent) => {
+    
+    const submitProblem = async(e: React.FormEvent) => {
         e.preventDefault();
-        alert("送信");
+        await trouble({text})
     };
 
     return (
@@ -31,10 +36,6 @@ export const PostTextBox = ({
                             <p className="border-r px-2">本文</p>
                             <div className="flex space-x-2 px-2">
                                 <img src={`${darkMode?"/assets/image.svg":"/assets/imageblack.svg"}`} alt="画像追加" />
-                                <img
-                                    src={`${darkMode?"/assets/stamp.svg":"/assets/stampblack.svg"}`}
-                                    alt="スタンプ追加機能"
-                                />
                             </div>
                         </div>
                         <textarea
@@ -70,10 +71,6 @@ export const PostTextBox = ({
                         <p className="border-r px-2">本文</p>
                         <div className="flex space-x-2 px-2">
                             <img src={`${darkMode?"/assets/image.svg":"/assets/imageblack.svg"}`} alt="画像追加" />
-                            <img
-                                src={`${darkMode?"/assets/stamp.svg":"/assets/stampblack.svg"}`}
-                                alt="スタンプ追加機能"
-                            />
                         </div>
                     </div>
                     <textarea

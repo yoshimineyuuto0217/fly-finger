@@ -3,6 +3,8 @@ import LiTitle from "./LiTitle";
 import { PostTextBox } from "./PostTextBox";
 import { modeChangeFunction } from "Pages/hooks/Modal";
 import { usePage } from "@inertiajs/react";
+import { submitLogout } from "Pages/api/Auth";
+import { useState } from "react";
 
 type OtherProps = {
     className: string;
@@ -13,6 +15,7 @@ const OtherModal = ({ className, otherRef }: OtherProps) => {
     const { problem, changeProblemModal, closeProblemModal } =
         modeChangeFunction();
     const { darkMode, toggleDarkMode} = useModal();
+    const [text,setText] = useState("");
     const { url } = usePage();
     const pathName = url === "/fly";
     return (
@@ -44,12 +47,15 @@ const OtherModal = ({ className, otherRef }: OtherProps) => {
                 <LiTitle
                     title="ログアウト"
                     href="login"
+                    onClick={submitLogout}
                     src={`${darkMode?"/assets/logout.svg":"/assets/logoutblack.svg"}`}
                     size="small"
                 />
             </div>
             {problem && (
                 <PostTextBox
+                    text={text}
+                    setText={setText}
                     changeModal={closeProblemModal}
                     className={`fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[9999] Mode ${
                         darkMode ? "dark" : "light"
