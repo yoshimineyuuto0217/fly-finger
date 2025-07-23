@@ -9,7 +9,7 @@ const Top = () => {
             <h1>Fly Finger</h1>
             <div className="flex gap-x-5">
                 <Link href="/login">Login</Link>
-                <button>Sign up</button>
+                <Link href="/signup">SignUp</Link>
             </div>
         </div>
         </div>

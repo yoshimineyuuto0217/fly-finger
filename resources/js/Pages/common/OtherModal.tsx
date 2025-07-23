@@ -3,6 +3,7 @@ import LiTitle from "./LiTitle";
 import { PostTextBox } from "./PostTextBox";
 import { modeChangeFunction } from "Pages/hooks/Modal";
 import { usePage } from "@inertiajs/react";
+import { submitLogout } from "Pages/api/Auth";
 
 type OtherProps = {
     className: string;
@@ -44,6 +45,7 @@ const OtherModal = ({ className, otherRef }: OtherProps) => {
                 <LiTitle
                     title="ログアウト"
                     href="login"
+                    onClick={submitLogout}
                     src={`${darkMode?"/assets/logout.svg":"/assets/logoutblack.svg"}`}
                     size="small"
                 />
