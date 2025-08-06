@@ -34,7 +34,7 @@ class TroubleController extends Controller
             $validated = $request->validate([
                 'report_text'       => 'required|max:50',
                 'report_imageUrl'   => 'nullable|array',
-                'report_imageUrl.*' => 'mimes:jpg,jpeg,png,gif,webp,svg|max:2048',
+                'report_imageUrl.*' => 'mimes:jpg,jpeg,png,gif,webp,svg|max:5120',
                 'troublePost_id'    => 'nullable|integer|exists:post,post_id',
                 'reported_user_id'  => 'nullable|integer|exists:user,user_id',
             ]);
