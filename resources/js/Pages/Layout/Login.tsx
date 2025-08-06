@@ -1,11 +1,11 @@
-import { submitLogin } from "Pages/api/Auth";
+import { useAuthProvider } from "Pages/context/authContext";
 import React, { useState } from "react";
 
 const Login = () => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-
+    const {submitLogin} = useAuthProvider();
     return (
         <div className="max-w-md mx-auto p-6 bg-white rounded shadow">
             <h2 className="text-2xl mb-4">Login</h2>

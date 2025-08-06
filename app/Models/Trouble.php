@@ -7,8 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Trouble extends Model
 {
     // protectedはアクセス修飾子でインスタンス化して使えない 同じクラスないでは使える
+    // 以下はトラブルテーブルを静的メソッド使うために書くもの
     protected $table = 'trouble';
+    // 以下はテーブルの位置のキーを記載する
     protected $primaryKey = 'trouble_id';
+
     public $timestamps = false;
 
     protected $fillable = [
@@ -18,6 +21,10 @@ class Trouble extends Model
         'report_text',
         'report_imageUrl',
         'create_by',
+    ];
+
+     protected $casts = [
+        'report_imageUrl' => 'array',
     ];
 
     // 関連するユーザー（通報者）

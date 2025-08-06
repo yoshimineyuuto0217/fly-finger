@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class () extends Migration {
     /**
      * Run the migrations.
      */
@@ -20,7 +19,7 @@ return new class extends Migration
             $table->foreign('troublePost_id')->references('post_id')->on('post');
             $table->foreign('reported_user_id')->references('user_id')->on('user');
             $table->string('report_text');
-            $table->string('report_imageUrl')->nullable();
+            $table->json('report_imageUrl')->nullable();
             $table->timestamp('create_at')->useCurrent();
             $table->unsignedBigInteger('create_by');
         });

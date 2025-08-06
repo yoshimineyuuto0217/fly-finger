@@ -1,33 +1,20 @@
 <?php
 
+// app/Models/PostTag.php  ※Pivotモデル
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class PostTag extends Model
+class PostTag extends Pivot
 {
-    protected $table = 'post_tag'; // テーブル名
+    protected $table      = 'post_tag';
+    public    $incrementing = false;
+    public    $timestamps   = false;
 
-    protected $primaryKey = 'postTag_id'; // 主キーが postTag_id
-
-    public $timestamps = false; // created_at / updated_at を使わない
-
-    protected $fillable = [
-        'tag_id',
+    protected $fillable   = [
         'post_id',
+        'tag_id',
         'create_by',
-        'create_at',
+        'created_at',
     ];
-
-    // リレーション：PostTag は 1つのTag に属する
-    public function tag()
-    {
-        return $this->belongsTo(Tag::class, 'tag_id', 'tag_id');
-    }
-
-    // リレーション：PostTag は 1人のユーザーに属する
-    public function user()
-    {
-        return $this->belongsTo(User::class, 'user_id', 'user_id');
-    }
 }

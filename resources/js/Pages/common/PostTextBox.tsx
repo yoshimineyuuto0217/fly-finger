@@ -1,25 +1,39 @@
 import { trouble } from "Pages/api/Auth";
 import { useModal } from "Pages/context/modalContext";
-import { Dispatch, SetStateAction, useState } from "react";
+import { ChangeEvent, Dispatch, SetStateAction, useRef, useState } from "react";
 
 export const PostTextBox = ({
     changeModal,
     className,
     problemClass,
     text,
-    setText
+    setText,
 }: {
     changeModal: () => void;
-    text:string;
-    setText: (val: string) => void;
+    text: string;
+    setText: (val: string | null) => void;
     className?: string;
     problemClass?: boolean;
 }) => {
-    const {darkMode} = useModal();
-    
-    const submitProblem = async(e: React.FormEvent) => {
+    const troubleRef = useRef<HTMLInputElement | null>(null);
+    const [troubleImg, setTroubleImg] = useState<string[]>([]);
+    const [submitImg, setSubmitImg] = useState<File[] >([]);
+
+    const { darkMode } = useModal();
+
+    const submitProblem = async (e: React.FormEvent) => {
         e.preventDefault();
-        await trouble({text})
+        await trouble({ text, submitImg });
+        // setTroubleImg([]);
+        // setText("");
+    };
+
+    const handleChangeProfileImg = (e: ChangeEvent<HTMLInputElement>) => {
+        const files = Array.from(e.target.files || []);
+        setSubmitImg(files);
+        if (!files) return;
+        const preview = files.map((f) => URL.createObjectURL(f));
+        setTroubleImg(preview);
     };
 
     return (
@@ -35,7 +49,27 @@ export const PostTextBox = ({
                         <div className="flex h-8 border-b items-center">
                             <p className="border-r px-2">本文</p>
                             <div className="flex space-x-2 px-2">
-                                <img src={`${darkMode?"/assets/image.svg":"/assets/imageblack.svg"}`} alt="画像追加" />
+                                <img
+                                    src={`${
+                                        darkMode
+                                            ? "/assets/image.svg"
+                                            : "/assets/imageblack.svg"
+                                    }`}
+                                    alt="画像追加"
+                                    className="cursor-pointer"
+                                    onClick={() =>
+                                        troubleRef.current &&
+                                        troubleRef.current.click()
+                                    }
+                                />
+                                <input
+                                    multiple
+                                    type="file"
+                                    className="hidden"
+                                    accept="image/*"
+                                    ref={troubleRef}
+                                    onChange={handleChangeProfileImg}
+                                />
                             </div>
                         </div>
                         <textarea
@@ -46,6 +80,43 @@ export const PostTextBox = ({
                             value={text}
                             onChange={(e) => setText(e.target.value)}
                         ></textarea>
+                        {troubleImg && troubleImg.length > 0 && (
+                            <div className="flex space-x-2 p-2">
+                                {troubleImg.map((url, i) => (
+                                    <div
+                                        key={i}
+                                        className="relative w-[50px] h-[50px]"
+                                    >
+                                        {/* 画像プレビュー */}
+                                        <img
+                                            src={url}
+                                            alt={`プレビュー${i + 1}`}
+                                            className="w-full h-full object-cover rounded"
+                                        />
+
+                                        {/* 画像ごとのキャンセルボタン */}
+                                        <button
+                                            type="button"
+                                            onClick={() =>
+                                                setTroubleImg((imgs) =>
+                                                    imgs.filter(
+                                                        (_, idx) => idx !== i
+                                                    )
+                                                )
+                                            }
+                                            className="absolute top-0 right-0 w-[15px] h-[15px]"
+                                        >
+                                            <img
+                                                src="/assets/blackCancel.svg"
+                                                alt="削除"
+                                                className="w-full h-full"
+                                            />
+                                        </button>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+
                         <div className="flex border-t h-8 items-center">
                             <button
                                 type="button"
@@ -64,13 +135,18 @@ export const PostTextBox = ({
                     </div>
                 </form>
             ) : (
-                <div
-                    className={`w-full h-auto border rounded-xl `}
-                >
+                <div className={`w-full h-auto border rounded-xl `}>
                     <div className="flex h-8 border-b items-center">
                         <p className="border-r px-2">本文</p>
                         <div className="flex space-x-2 px-2">
-                            <img src={`${darkMode?"/assets/image.svg":"/assets/imageblack.svg"}`} alt="画像追加" />
+                            <img
+                                src={`${
+                                    darkMode
+                                        ? "/assets/image.svg"
+                                        : "/assets/imageblack.svg"
+                                }`}
+                                alt="画像追加"
+                            />
                         </div>
                     </div>
                     <textarea

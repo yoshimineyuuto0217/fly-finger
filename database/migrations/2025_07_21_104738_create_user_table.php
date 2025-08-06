@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class () extends Migration {
     /**
      * Userテーブルを作るもの
      */
@@ -18,6 +17,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('profile_img')->nullable();
+            $table->string('profile_text')->nullable();
             $table->unsignedBigInteger('create_by');
             // ->useCurrent();は作成時間を勝手に入れてくれるもの
             $table->timestamp('create_at')->useCurrent();
@@ -40,4 +40,3 @@ return new class extends Migration
         Schema::dropIfExists('user');
     }
 };
-
