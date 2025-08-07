@@ -1,24 +1,13 @@
-import { Inertia } from "@inertiajs/inertia";
 import axios from "axios";
+import { BASE_URL } from "Pages/constants/inlinesize";
+import { ChangeEvent } from "react";
 
-// ログイン処理
-export const submitLogin = async (
-    e: React.FormEvent<HTMLFormElement>,
-    credentials: { name: string; email: string; password: string }
-) => {
-    e.preventDefault();
-    try {
-        await axios.get("/sanctum/csrf-cookie", { withCredentials: true });
-        const res = await axios.post("/login", credentials, {
-            withCredentials: true,
-        });
-        if (res.status === 200) {
-            console.log("送信完了", res);
-            Inertia.visit("/home");
-        }
-    } catch (error) {
-        console.error("ログインに失敗しました", error);
-    }
+export type ProfileData = {
+    user: {
+        name: string;
+        profile_img: string | null;
+        profile_text: string;
+    };
 };
 
 // ログアウト処理
@@ -86,16 +75,119 @@ export const submitRegister = async ({
 // 問題報告api
 export const trouble = async ({
     text,
+    submitImg,
 }: {
     text: string;
+    submitImg: File[];
 }) => {
     try {
-        const res = await axios.post("trouble",{
-        report_text:text,
-        report_imageUrl:null,
-        })
-        console.log(`問題報告をしました ${res}`)
+        const formData = new FormData();
+        formData.append("report_text", text);
+
+        submitImg.forEach((file) => {
+            formData.append(`report_imageUrl[]`, file);
+        });
+
+        const res = await axios.post("trouble", formData, {
+            withCredentials: true,
+        });
+
+        console.log(`問題報告をしました:`, JSON.stringify(res.data, null, 2));
+    } catch (error: any) {
+        console.error("ステータス:", error.response?.status);
+        console.error("レスポンスボディ:", error.response?.data);
+    }
+};
+
+// profileを取得api
+export const getProfile = async (): Promise<ProfileData["user"] | null> => {
+    try {
+        const res = await axios.get<ProfileData>("/me", {
+            withCredentials: true,
+            headers: { "Content-Type": "application/json" },
+        });
+        console.log(res.data);
+        return {
+            name: res.data.user.name,
+            profile_img: res.data.user.profile_img
+                ? `${BASE_URL}/storage/${res.data.user.profile_img}`
+                : null,
+            profile_text: res.data.user.profile_text,
+        };
     } catch (error) {
-        console.error(`問題を報告できませんでした${error}`);
+        console.error(`プロフィール情報の取得に失敗しました`, error);
+        return null;
+    }
+};
+
+// プロフィール文のpatch処理api
+export const profileTextRegister = async ({
+    e,
+    profileText,
+}: {
+    e: React.FormEvent;
+    profileText: string;
+}) => {
+    e.preventDefault();
+    try {
+        const res = await axios.patch(
+            "/patchText",
+            { profile_text: profileText },
+            { withCredentials: true }
+        );
+        console.log(`プロフィール文の更新成功です`, JSON.stringify(res.data));
+    } catch (error) {
+        console.error(`プロフィール文の更新失敗です${error}`);
+        alert("100文字以内で入力してください");
+    }
+};
+
+// プロフィールの名前を更新api
+export const profileNameRegister = async ({
+    e,
+    profileName,
+}: {
+    e: ChangeEvent<HTMLInputElement>;
+    profileName: string;
+}) => {
+    e.preventDefault();
+    try {
+        const res = await axios.patch(
+            "/patchName",
+            { name: profileName },
+            { withCredentials: true }
+        );
+        console.log(`名前の更新に成功しました`, JSON.stringify(res.data));
+    } catch (error) {
+        console.error("名前の更新に失敗しました", error);
+        alert("12文字以内で入力してください");
+    }
+};
+
+// 画像更新api
+export const profileImageRegister = async ({
+    upDateFile,
+}: {
+    upDateFile: any;
+}) => {
+    const formData = new FormData();
+    formData.append("file", upDateFile);
+    try {
+        const res = await axios.post("/postImage", formData, {
+            withCredentials: true,
+        });
+        console.log("画像の更新に成功しました", res.data);
+    } catch (error) {
+        console.error(`画像の更新に失敗しました`);
+    }
+};
+
+// 全記事取得api
+export const getAllArticle = async () => {
+    try {
+        const res = await axios.get("/articlePost", { withCredentials: true });
+        return res.data;
+    } catch (error) {
+        console.log(`エラー出てます${error}`);
     }
 };

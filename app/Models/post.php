@@ -1,32 +1,29 @@
 <?php
 
+// app/Models/Post.php
 namespace App\Models;
-
 use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
-    // テーブル名が posts でないので指定する
-    protected $table = 'post';
-
-    // 主キー名が id でないので指定する
+    protected $table      = 'post';
     protected $primaryKey = 'post_id';
+    public $timestamps    = false;
+    protected $fillable   = ['user_id','title','content','image_url','create_at','create_by'];
 
-    // タイムスタンプカラムがない（created_at/updated_at）ので false にする 自分でcreateと描いたときはfalseを書かないといけない
-    public $timestamps = false;
-
-    // fillable: 一括代入可能なカラムを明示する
-    protected $fillable = [
-        'user_id',
-        'postTag_id',
-        'title',
-        'content',
-        'image_url',
-        'create_at',
-        'create_by',
-    ];
-    public function user()
+    // 多対多のリレーション定義
+    public function tags()
     {
-        return $this->belongsTo(User::class, 'user_id', 'user_id');
+        return $this->belongsToMany(
+            Tag::class,
+            'post_tag',
+            'post_id',
+            'tag_id'
+        )
+        ->using(PostTag::class)
+        ->withPivot(['create_by','created_at']);
+    }
+    public function user() {
+        return $this->belongsTo(User::class,'create_by');
     }
 }

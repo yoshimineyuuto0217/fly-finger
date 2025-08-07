@@ -21,9 +21,9 @@ class EnsureRegisteredOrLoggedIn
         if (Auth::check()) {
             return $next($request);
         }
-Log::debug('[Middleware] unauthenticated, redirecting to login', [
-            'path' => $request->path(),
-        ]);
+        Log::debug('[Middleware] unauthenticated, redirecting to login', [
+                    'path' => $request->path(),
+                ]);
 
         // 未ログインなら /login へリダイレクト
         return redirect()->route('login');

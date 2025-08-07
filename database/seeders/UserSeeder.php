@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 
 class UserSeeder extends Seeder
 {
@@ -20,7 +19,7 @@ class UserSeeder extends Seeder
                 'name'       => 'Alice',
                 'email'      => 'alice@example.com',
                 'password'   => Hash::make('password123'),
-                'profile_img'=> null,
+                'profile_img' => null,
                 'createBy'   => 1,
                 'updateBy'   => 1,
                 'createAt'   => now(),
@@ -30,7 +29,7 @@ class UserSeeder extends Seeder
                 'name'       => 'Bob',
                 'email'      => 'bob@example.com',
                 'password'   => Hash::make('secret456'),
-                'profile_img'=> null,
+                'profile_img' => null,
                 'createBy'   => 1,
                 'updateBy'   => 1,
                 'createAt'   => now(),

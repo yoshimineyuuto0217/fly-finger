@@ -21,7 +21,7 @@ export const modeChangeFunction = () => {
                 OtherRef.current &&
                 !OtherRef.current.contains(event.target as Node)
             ) {
-                setOtherModal(false);
+                setOtherModal(true);
             }
         };
         document.addEventListener("mousedown", handleClickOutside);

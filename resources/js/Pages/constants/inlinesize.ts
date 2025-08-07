@@ -5,3 +5,4 @@ export const INLINE_SIZE = {
     small:"text-[20px]"
   }
 }
+export const BASE_URL = "http://localhost:8000";

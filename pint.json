@@ -1,0 +1,6 @@
+{
+  "preset": "psr12",
+  "rules": {
+    "phpdoc_annotation_without_dot": false
+  }
+}

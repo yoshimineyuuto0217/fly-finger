@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\File;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -13,6 +14,15 @@ use Inertia\Inertia;
 //         'phpVersion' => PHP_VERSION,
 //     ]);
 // });
+Route::get('/storage/{path}', function ($path) {
+    $file = storage_path("app/public/{$path}");
+    if (! File::exists($file)) {
+        abort(404);
+    }
+    return response()->file($file, [
+        'Content-Type' => File::mimeType($file),
+    ]);
+})->where('path', '.*');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

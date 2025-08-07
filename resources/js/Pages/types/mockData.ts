@@ -1,3 +1,5 @@
+// モックのAPI
+
 export type UserProps = {
     name:string;
     id: string;
@@ -16,6 +18,26 @@ export type listUserProp = {
 
 export type listUserProps = {
     tasks: UserProps[];
+};
+
+// apiからとってものの型は
+// 例②: user オブジェクトごと受け取る版
+export type ApiUserPropsNested = {
+  post_id:   number;
+  user_id:   number;
+  title:     string;
+  content:   string;
+  image_url: string | null;
+  create_at: string;
+  create_by: number;
+  user: {
+    profile_img: string | null;
+    name : string;
+  };
+};
+
+export type APIlistUserProps = {
+    tasks: ApiUserPropsNested[];
 };
 
 export const mockData = {
