@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['web', 'auth:web'])
      ->group(function () {
          Route::get('/me', [UserController::class,'me']);
+         ROUTE::get('/articlePost',[UserController::class,'articlePost']);
          Route::patch('/patchText',[UserController::class,'patchText']);
          Route::patch('/patchName',[UserController::class,'patchName']);
          Route::post('/postImage',[UserController::class,'postImage']);

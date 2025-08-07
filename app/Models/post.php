@@ -23,4 +23,7 @@ class Post extends Model
         ->using(PostTag::class)
         ->withPivot(['create_by','created_at']);
     }
+    public function user() {
+        return $this->belongsTo(User::class,'create_by');
+    }
 }

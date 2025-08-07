@@ -181,3 +181,13 @@ export const profileImageRegister = async ({
         console.error(`画像の更新に失敗しました`);
     }
 };
+
+// 全記事取得api
+export const getAllArticle = async () => {
+    try {
+        const res = await axios.get("/articlePost", { withCredentials: true });
+        return res.data;
+    } catch (error) {
+        console.log(`エラー出てます${error}`);
+    }
+};

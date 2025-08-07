@@ -16,8 +16,9 @@ export const PostTextBox = ({
     problemClass?: boolean;
 }) => {
     const troubleRef = useRef<HTMLInputElement | null>(null);
+    const postRef = useRef<HTMLInputElement | null>(null);
     const [troubleImg, setTroubleImg] = useState<string[]>([]);
-    const [submitImg, setSubmitImg] = useState<File[] >([]);
+    const [submitImg, setSubmitImg] = useState<File[]>([]);
 
     const { darkMode } = useModal();
 
@@ -138,7 +139,7 @@ export const PostTextBox = ({
                 <div className={`w-full h-auto border rounded-xl `}>
                     <div className="flex h-8 border-b items-center">
                         <p className="border-r px-2">本文</p>
-                        <div className="flex space-x-2 px-2">
+                        <div className="flex space-x-2 px-2 cursor-pointer">
                             <img
                                 src={`${
                                     darkMode
@@ -146,6 +147,17 @@ export const PostTextBox = ({
                                         : "/assets/imageblack.svg"
                                 }`}
                                 alt="画像追加"
+                                onClick={() =>
+                                    postRef.current && postRef.current.click()
+                                }
+                            />
+                            <input
+                                multiple
+                                type="file"
+                                className="hidden"
+                                accept="image/*"
+                                ref={postRef}
+                                onChange={handleChangeProfileImg}
                             />
                         </div>
                     </div>

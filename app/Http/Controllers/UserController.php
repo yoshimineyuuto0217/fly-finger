@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use App\Models\User;
 use Exception;
 use Illuminate\Foundation\Testing\Concerns\InteractsWithExceptionHandling;
@@ -11,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use WpOrg\Requests\Port;
 
 use function Laravel\Prompts\error;
 
@@ -66,6 +68,21 @@ class UserController extends Controller
             Log::error("プロフィール取得エラー", [
                 'exception' => $error->getMessage(),
                 'trace'     => $error->getTraceAsString(),]);
+        }
+    }
+    // 全記事取得をするAPI
+    public function articlePost(){
+        try{
+            $allArticle = Post::with(['user:user_id,profile_img,name'])->get();
+            return response()->json(['tasks'=> $allArticle],200);
+        }catch (\Throwable $error) {
+            Log::error("記事取得エラー", [
+                'exception' => $error->getMessage(),
+                'trace'     => $error->getTraceAsString(),]);
+            return response()->json([
+                'message' => '記事の取得に失敗しました。'
+            ], 500);
+
         }
     }
     // プロフィール文の登録・更新
